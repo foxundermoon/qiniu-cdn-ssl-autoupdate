@@ -1,13 +1,11 @@
 #!/usr/bin/env sh
 
-VERSION="0.0.1"
+VERSION="alpine-0.0.1"
 NAME="qiniu-cdn-ssl-autoupdate"
 
 TAG="foxundermoon/$NAME:$VERSION"
 
 function build() {
-	# echo "build typescript"
-	# npm run build
 	echo "docker build -t $TAG ."
 	docker build -t $TAG .
 }

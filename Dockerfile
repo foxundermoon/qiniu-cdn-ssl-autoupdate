@@ -1,4 +1,4 @@
-FROM python:3.5.6
+FROM python:3.5.6-alpine3.8
 WORKDIR /app
 
 USER root
@@ -8,8 +8,7 @@ ENV SDK_VERSION=7.2.2
 #install acme.sh
 # pip install qiniu   failed
 
-RUN apt-get -y update && \
-    apt-get install -y cron socat && \
+RUN apk add --no-cache  socat openssl -y && \
     wget -O -  https://get.acme.sh | sh && \
     wget -qO-  -O qiniu.zip  "${MASTER}"  && \
     unzip qiniu.zip  && \
@@ -21,4 +20,6 @@ RUN apt-get -y update && \
 
 COPY . /app
 
-CMD ["bash","startup.sh"]
+VOLUME [ "/ssl" ]
+
+CMD ["bash", "startup.sh"]
