@@ -1,12 +1,22 @@
-FROM python:2.7
+FROM python:3.5.6
 WORKDIR /app
 
+USER root
+ENV RELEASE_URL=https://github.com/qiniu/python-sdk/archive
+ENV MASTER=https://github.com/qiniu/python-sdk/archive/master.zip
+ENV SDK_VERSION=7.2.2
 #install acme.sh
-RUN apt-get -y update && apt-get install -y cron socat vim
-RUN git clone https://github.com/Neilpang/acme.sh.git && cd ./acme.sh && ./acme.sh --install && cd ..
+# pip install qiniu   failed
 
-#install qiniu sdk
-RUN git clone https://github.com/qiniu/python-sdk.git qiniu-python-sdk && cd qiniu-python-sdk && python setup.py install && cd ..
+RUN apt-get -y update && \
+    apt-get install -y cron socat && \
+    wget -O -  https://get.acme.sh | sh && \
+    wget -qO-  -O qiniu.zip  "${RELEASE_URL}/v${SDK_VERSION}.zip"  && \
+    unzip qiniu.zip  && \
+    rm -f qiniu.zip && \
+    cd "python-sdk-${SDK_VERSION}" && \
+    python setup.py install 
 
-ADD . /app
+COPY . /app
+
 CMD ["bash","startup.sh"]
