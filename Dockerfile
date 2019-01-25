@@ -11,11 +11,13 @@ ENV SDK_VERSION=7.2.2
 RUN apt-get -y update && \
     apt-get install -y cron socat && \
     wget -O -  https://get.acme.sh | sh && \
-    wget -qO-  -O qiniu.zip  "${RELEASE_URL}/v${SDK_VERSION}.zip"  && \
+    wget -qO-  -O qiniu.zip  "${MASTER}"  && \
     unzip qiniu.zip  && \
     rm -f qiniu.zip && \
-    cd "python-sdk-${SDK_VERSION}" && \
-    python setup.py install 
+    cd python-sdk-master && \
+    python setup.py install && \
+    cd .. && \
+    rm -rf python-sdk-master
 
 COPY . /app
 
