@@ -8,7 +8,7 @@ ENV SDK_VERSION=7.2.2
 #install acme.sh
 # pip install qiniu   failed
 
-RUN apk add --no-cache  socat openssl -y && \
+RUN apk add --no-cache  socat openssl  && \
     wget -O -  https://get.acme.sh | sh && \
     wget -qO-  -O qiniu.zip  "${MASTER}"  && \
     unzip qiniu.zip  && \
@@ -22,4 +22,4 @@ COPY . /app
 
 VOLUME [ "/ssl" ]
 
-CMD ["bash", "startup.sh"]
+CMD ["sh", "startup.sh"]

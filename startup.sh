@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 acme="/root/.acme.sh/acme.sh"
 
 if [[ "$SSLDOMAIN" == "" ]]; then
